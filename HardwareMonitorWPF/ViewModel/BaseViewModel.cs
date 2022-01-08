@@ -14,7 +14,10 @@ namespace HardwareMonitorWPF.ViewModel
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            if (PropertyChanged != null) 
+            { 
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName)); 
+            }
         }
     }
 }

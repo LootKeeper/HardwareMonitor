@@ -58,6 +58,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\IDelegateCommand.cs" />
+    <Compile Include="Context\RenderContext.cs" />
+    <Compile Include="Context\IContext.cs" />
+    <Compile Include="Scheduler\IActionTask.cs" />
+    <Compile Include="Scheduler\ActionTask.cs" />
+    <Compile Include="Scheduler\ActionTaskManager.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
@@ -105,6 +111,10 @@
     <ProjectReference Include="..\HardwareMonitorDLLWrapper\HardwareMonitorDLLWrapper.csproj">
       <Project>{3ad3028e-8716-4951-813b-506af3006fa8}</Project>
       <Name>HardwareMonitorDLLWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SerialBridge\SerialBridge.csproj">
+      <Project>{5EC5D871-0000-438C-B7FF-555F5EBBF74E}</Project>
+      <Name>SerialBridge</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

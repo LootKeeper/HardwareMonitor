@@ -6,12 +6,38 @@
         xmlns:local="clr-namespace:HardwareMonitorWPF"
         xmlns:vm="clr-namespace:HardwareMonitorWPF.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Hardware temperature monitor" Height="239" Width="247" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="142,152,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="43" Width="102" Text="{Binding CpuTemp}"/>
-        <Button Content="Click" Margin="142,380,0,0" VerticalAlignment="Top" Command="{Binding HandleClick}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="57*"/>
+            <ColumnDefinition Width="743*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.ColumnSpan="2" Margin="10,0,10,78">
+            <Grid HorizontalAlignment="Center" Width="247">
+                <TextBlock Height="28" Text="Cpu temp:" TextAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="62" />
+
+                <TextBlock Margin="90,10,0,0" TextWrapping="Wrap" Text="{Binding CpuTemp}" Height="24" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                <TextBlock TextWrapping="Wrap" Height="24" Text="Gpu temp:" TextAlignment="Left" Margin="20,38,0,0" RenderTransformOrigin="0.41,0.813" HorizontalAlignment="Left" Width="62" VerticalAlignment="Top" />
+
+                <TextBlock Margin="90,39,0,0" TextWrapping="Wrap" Height="24" Text="{Binding GpuTemp}" RenderTransformOrigin="0.59,0.625"  Width="20" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            </Grid>
+        </Border>
+
+        <Border Margin="10,150,10,10" Grid.ColumnSpan="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="157*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Connect" HorizontalAlignment="Left" Margin="10,0,0,10" Command="{Binding HandleConnectClick}" Width="69" Height="29" VerticalAlignment="Bottom"/>
+                <ComboBox Margin="97,0,10,13" Text="Serial Port" Grid.ColumnSpan="2" Height="22" VerticalAlignment="Bottom" SelectedItem="{Binding SelectedCOMPort}" ItemsSource="{Binding COMPorts}"/>
+            </Grid>
+        </Border>
+
     </Grid>
 </Window>

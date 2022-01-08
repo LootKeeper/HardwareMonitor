@@ -9,33 +9,36 @@ namespace HardwareMonitorDLLWrapper
 {
     public class TemperatureSensor
     {
-        private IHardware hardware;
-        private ISensor sensor;
+        private IHardware _hardware;
+        private ISensor _sensor;
 
         public TemperatureSensor(IHardware hardware)
         {
-            this.hardware = hardware;
-            sensor = hardware.Sensors.First(s => s.SensorType == SensorType.Temperature && sensor.Name.Contains("CPU Package")) ?? hardware.Sensors.First(s => s.SensorType == SensorType.Temperature);
+            this._hardware = hardware;
+            _sensor = hardware.Sensors
+                        .FirstOrDefault(s => s.SensorType == SensorType.Temperature && 
+                        s.Name.Contains("CPU Package")) ?? 
+                     hardware.Sensors.First(s => s.SensorType == SensorType.Temperature);
         }
 
         public TemperatureSensor(IHardware hardware, ISensor sensor)
         {
-            this.hardware = hardware;
-            this.sensor = sensor;
+            this._hardware = hardware;
+            this._sensor = sensor;
         }
 
 
         public bool HasSensor()
         {
-            return sensor != null;
+            return _sensor != null;
         }
 
         public double GetTemperature()
         {
             if (this.HasSensor())
             {
-                hardware.Update();
-                return sensor.Value.GetValueOrDefault();
+                _hardware.Update();
+                return Convert.ToInt32(_sensor.Value.GetValueOrDefault());
             }
 
             return 0.0;

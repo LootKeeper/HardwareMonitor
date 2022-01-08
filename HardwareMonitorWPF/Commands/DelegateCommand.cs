@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace HardwareMonitorWPF.Commands
 {
-    public class DelegateCommand : ICommand
+    public class DelegateCommand : IDelegateCommand
     {
         private readonly Action _execute;
 
@@ -24,10 +19,9 @@ namespace HardwareMonitorWPF.Commands
 
         public void RaiseCanExecuteChanged()
         {
-            var handler = CanExecuteChanged;
-            if(handler != null)
+            if(CanExecuteChanged != null)
             {
-                handler(this, EventArgs.Empty);
+                CanExecuteChanged(this, EventArgs.Empty);
             }
         }
 

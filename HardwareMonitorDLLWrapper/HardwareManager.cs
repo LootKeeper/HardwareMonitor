@@ -4,7 +4,7 @@ using System.Text;
 using OpenHardwareMonitor;
 using OpenHardwareMonitor.Hardware;
 
-namespace OpenHardwareMonitorWrapper
+namespace HardwareMonitorDLLWrapper
 {
     public class HardwareManager
     {
@@ -14,6 +14,7 @@ namespace OpenHardwareMonitorWrapper
             _computer = new Computer();
             _computer.GPUEnabled = true;
             _computer.CPUEnabled = true;
+            _computer.Open();
         }
 
         ~HardwareManager()
@@ -24,20 +25,29 @@ namespace OpenHardwareMonitorWrapper
             }
         }
 
-        public void GetCpuSensor()
+        public TemperatureSensor GetTemperatureSensor(HardwareType type)
         {
-            _computer.Open();
-
-            IHardware[] hardwares = _computer.Hardware;
-            foreach (var hardware in hardwares)
+            var hardware = GetHardware(type);
+            if(hardware == null)
             {
-                if(hardware.HardwareType is HardwareType.CPU)
+                return null;
+            }
+            return new TemperatureSensor(hardware);
+        }
+
+        private IHardware GetHardware(HardwareType type)
+        {
+            var hardwareType = HardwareTypeCaster.Cast(type);
+            foreach(var hardware in _computer.Hardware)
+            {
+                if(hardware.HardwareType == hardwareType)
                 {
                     hardware.Update();
-
-                    
+                    return hardware;
                 }
             }
+
+            return null;
         }
     }
 }
